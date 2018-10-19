@@ -1,0 +1,25 @@
+{
+	"name": "reddit voter",
+	"description": "reddit voter",
+	"version": "1.0",
+	"manifest_version": 2,
+	"permissions": [
+		"webRequest",
+		"*://script.google.com/",
+		"*://*.reddit.com/"
+	],
+	"background": {
+		"scripts": ["background.js"],
+		"persistent": true
+	},
+	"content_scripts": [
+		{
+			"matches": [
+				"*://*.reddit.com/r/AsiaTripper/comments/*"
+			],
+			"js": [
+				"content_script.js"
+			]
+		}
+	]
+}

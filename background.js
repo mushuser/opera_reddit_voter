@@ -1,4 +1,3 @@
-var SCRIPT_ID = ""
 
 (function() {
     const tabStorage = {};
@@ -45,12 +44,8 @@ var SCRIPT_ID = ""
             if(match) {
                 var dir = match[1]
                 var name = match[2]
-                /*
-                var age = get_age(datatimestamp)
-                datatimestamp = undefined
-                */
-                send_voter(name, dir)
-                console.log("name=%s, dir=%s", name, dir)
+                send_voter(name, dir, logged_user)
+                console.log("name=%s, dir=%s, logged_user=%s", name, dir, logged_user)
             }
         }
 
@@ -102,10 +97,10 @@ function get_age(created) {
     }
 }
 
-function send_voter(name, dir) {
+function send_voter(name, dir, logged_user) {
     var xhr = new XMLHttpRequest();
     var base_url = "https://script.google.com/macros/s/" + SCRIPT_ID + "/exec"
-    var url = base_url + "?name=" + name + "&dir=" + dir
+    var url = base_url + "?name=" + name + "&dir=" + dir + "&logged_user=" + logged_user 
     xhr.open('GET', url, true);
     xhr.onload = function () {
         var json = JSON.parse(this.responseText)
@@ -114,10 +109,13 @@ function send_voter(name, dir) {
     xhr.send();
 }
 
-var datatimestamp = undefined;
+var SCRIPT_ID
+
+var logged_user = undefined;
 
 chrome.runtime.onMessage.addListener(
         function(request, sender, sendResponse) {
-            datatimestamp = request.datatimestamp
+            logged_user = request.logged_user
+            // console.log("logged_user: %s", request.logged_user)
         }
 );

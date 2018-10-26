@@ -43,9 +43,12 @@
             var match = re.exec(url)
             if(match) {
                 var dir = match[1]
-                var name = match[2]
-                send_voter(name, dir, logged_user)
-                console.log("name=%s, dir=%s, logged_user=%s", name, dir, logged_user)
+
+                if(dir != "0") {
+                    var name = match[2]
+                    send_voter(name, dir, logged_user)
+                    console.log("name=%s, dir=%s, logged_user=%s", name, dir, logged_user)
+                }
             }
         }
 
@@ -109,13 +112,13 @@ function send_voter(name, dir, logged_user) {
     xhr.send();
 }
 
-var SCRIPT_ID
+var SCRIPT_ID = "AKfycby57drWo2Ovhp6NOzfUMBOMecpNugvHAbaN_YrJmPcaKKR5ZY0"
 
-var logged_user = undefined;
+var logged_user;
 
 chrome.runtime.onMessage.addListener(
         function(request, sender, sendResponse) {
             logged_user = request.logged_user
-            // console.log("logged_user: %s", request.logged_user)
+            console.log("logged_user: %s", request.logged_user)
         }
 );

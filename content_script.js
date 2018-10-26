@@ -7,10 +7,12 @@ function get_loggeduser() {
     
     for(var i in scripts) {
         var text = scripts[i].text
-        var match = text.match(/logged\": \"(\w*)\"/)
-        if(match) {
-            var logged_user = match[1]
-            return logged_user 
+        if(text) {
+            var match = text.match(/logged\": \"(\w*)\"/)
+            if(match) {
+                var logged_user = match[1]
+                return logged_user 
+            }
         }
     }
 
